@@ -1,30 +1,37 @@
-import js from "@eslint/js";
-import globals from "globals";
-import json from "@eslint/json";
-import css from "@eslint/css";
-import prettier from "eslint-plugin-prettier"; // 🔹 importa o plugin
-import { defineConfig } from "eslint/config";
+import js from '@eslint/js';
+import globals from 'globals';
+import json from '@eslint/json';
+import css from '@eslint/css';
+import prettierPlugin from 'eslint-plugin-prettier';
+import prettierConfig from 'eslint-config-prettier';
+import { defineConfig } from 'eslint/config';
 
 export default defineConfig([
   {
-    files: ["**/*.{js,mjs,cjs}"],
-    plugins: { js, prettier }, // 🔹 adiciona o prettier como plugin
-    extends: ["js/recommended", "prettier"],
-    rules: {
-      "prettier/prettier": "error", // 🔹 aplica o Prettier como regra
+    files: ['**/*.{js,mjs,cjs}'],
+    plugins: {
+      js,
+      prettier: prettierPlugin,
     },
-    languageOptions: { globals: globals.node }
+    extends: [js.configs.recommended, prettierConfig],
+    rules: {
+      'prettier/prettier': 'error',
+      'no-inline-comments': 'off', // permite comentários no meio do código
+    },
+    languageOptions: {
+      globals: globals.node,
+    },
   },
   {
-    files: ["**/*.json"],
+    files: ['**/*.json'],
     plugins: { json },
-    language: "json/json",
-    extends: ["json/recommended"]
+    extends: [json.configs.recommended],
+    language: 'json/json',
   },
   {
-    files: ["**/*.css"],
+    files: ['**/*.css'],
     plugins: { css },
-    language: "css/css",
-    extends: ["css/recommended"]
-  }
+    extends: [css.configs.recommended],
+    language: 'css/css',
+  },
 ]);
